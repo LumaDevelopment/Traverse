@@ -1,0 +1,114 @@
+/* General */
+
+/* Pretty font */
+p {
+    font-family: 'Inter', sans-serif;
+    color: white;
+    font-weight: normal;
+}
+
+.button {
+    background-color: #fbbc02;
+    color: white;
+    border: none;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: normal;
+    display: inline-block;
+    font-size: 13pt;
+    cursor: pointer;
+    margin-top: 9pt;
+    margin-bottom: 4pt;
+}
+
+body {
+    background-color: #28b8ef;
+    min-width: 200px;
+    max-width: 100%;
+}
+
+.buttonChangeRange {
+    border-radius: 15px;
+}
+
+/* popup_main.html */
+
+/*
+The id's are situated like this because
+margins are set with the assumption these
+elements will only ever be used with each
+other, and this layout communicates that
+relation (ex. biggerText1 & urlNum have a 5pt
+vertical margin)
+ */
+
+#mainText {
+    text-align: center;
+}
+
+#biggerText1 {
+    font-size: 14pt;
+    margin-bottom: 5pt;
+}
+
+#urlNum {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    color: #fbbc02;
+    font-size: 25pt;
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+    margin-left: 9pt;
+    margin-right: 9pt;
+}
+
+#biggerText2 {
+    font-size: 15pt;
+    margin-top: 5pt;
+    margin-bottom: 0pt;
+}
+
+#date1 {
+    font-size: 14pt;
+    margin-top: 9pt;
+    margin-bottom: 9pt;
+}
+
+#to {
+    font-size: 14pt;
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+}
+
+#date2 {
+    margin-top: 9pt;
+    font-size: 14pt;
+    margin-bottom: 0pt;
+}
+
+#setToToday {
+    margin-bottom: 0pt;
+}
+
+/* popup_change_range.js */
+
+/*
+This section is a kind of a lie, because it
+uses some of the elements from popup_main.html
+ */
+
+#datePicker1 {
+    margin-bottom: 9pt;
+}
+
+#endDate {
+    font-size: 14pt;
+    margin-top: 9pt;
+    margin-bottom: 9pt;
+}
+
+#datePicker2 {
+    margin-bottom: 9pt;
+}
