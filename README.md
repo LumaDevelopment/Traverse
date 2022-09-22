@@ -14,7 +14,7 @@ days and see how many URLs you visited over that set of days.
 There are two options for installing the extension:
 1) Go to your Chromium based browser's extensions page, turn on developer mode, and load the source directory as an
 unpacked extension.
-2) Install it from the Chrome Web Store: <i>Coming Soon!</i>
+2) Install it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/traverse/nhflifhjnbgjdchjppjadjpbfllomikp)
 
 Once the extension is installed, simply click the extension button in the top-right hand corner to view your URL count!
 You can use the 'Today' button to set the date range to today, or press the 'Change Range' button to change the range 
