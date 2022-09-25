@@ -55,12 +55,34 @@ chrome.storage.sync.get(['startDate'], (sdd) => {
             let total = 0;
 
             for (let [key, val] of Object.entries(result)) {
+
+                if((total + val) > Number.MAX_VALUE) {
+                    total = -1;
+                    break;
+                }
+
                 total += val;
+
             }
 
-            // toLocaleString() just makes sure we can get some sweet
-            // commas in the final text.
-            urlNum.innerText = total.toLocaleString('en-US');
+            if(total === -1) {
+
+                // If the number is programmatically too big, don't show at all!
+                urlNum.innerText = "Too many";
+
+            } else if(total.toString().length > 9) {
+
+                // If the number is too big, show it in a nicer format
+                urlNum.innerText = total.toExponential(3);
+
+            } else {
+
+                // toLocaleString() just makes sure we can get some sweet
+                // commas in the final text.
+
+                urlNum.innerText = total.toLocaleString('en-US');
+
+            }
 
         });
 
@@ -106,11 +128,34 @@ setToToday.addEventListener("click", async () => {
         // Loop, because chrome.storage is finicky and I
         // don't want to fix what isn't broken.
         for (let [key, val] of Object.entries(result)) {
+
+            if((total + val) > Number.MAX_VALUE) {
+                total = -1;
+                break;
+            }
+
             total += val;
+
         }
 
-        // Ta-da!
-        urlNum.innerText = total.toLocaleString('en-US');
+        if(total === -1) {
+
+            // If the number is programmatically too big, don't show at all!
+            urlNum.innerText = "Too many";
+
+        } else if(total.toString().length > 9) {
+
+            // If the number is too big, show it in a nicer format
+            urlNum.innerText = total.toExponential(3);
+
+        } else {
+
+            // toLocaleString() just makes sure we can get some sweet
+            // commas in the final text.
+
+            urlNum.innerText = total.toLocaleString('en-US');
+
+        }
 
     });
 
