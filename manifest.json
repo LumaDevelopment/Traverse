@@ -1,12 +1,12 @@
 {
   "name": "Traverse",
   "description": "How many URLs do you visit?",
-  "version": "2022.11.29",
+  "version": "2023.06.09",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "scripting"],
+  "permissions": ["storage"],
   "action": {
     "default_popup": "popup_main.html",
     "default_icon": {
