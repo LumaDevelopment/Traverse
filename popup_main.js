@@ -1,14 +1,4 @@
-// Utility function to convert yyyy-mm-dd to
-// a date object that I can iterate through
-function getDateObjFromString(dateText) {
-
-    let year = Number(dateText.split("-")[0]);
-    let month = Number(dateText.split("-")[1]) - 1;
-    let day = Number(dateText.split("-")[2]);
-
-    return new Date(year, month, day);
-
-}
+/* ---------- RUNS ON PAGE OPEN ---------- */
 
 // Chrome storage asynchronous madness
 chrome.storage.sync.get(['startDate'], (sdd) => {
@@ -25,8 +15,6 @@ chrome.storage.sync.get(['startDate'], (sdd) => {
         // urlNum takes a little while to load.
         dateOneText.innerText = startDate;
         dateTwoText.innerText = endDate;
-
-        let urlNum = document.getElementById("urlNum");
 
         let upperBoundDate = getDateObjFromString(endDate);
         let datesToCheck = [];
@@ -51,50 +39,13 @@ chrome.storage.sync.get(['startDate'], (sdd) => {
         // Call all of our date keys at once, then do our counting, also
         // due to chrome storage asynchronous madness.
         chrome.storage.sync.get(datesToCheck, function (result) {
-
-            let total = 0;
-
-            for (let [key, val] of Object.entries(result)) {
-
-                if((total + val) > Number.MAX_VALUE) {
-                    total = -1;
-                    break;
-                }
-
-                total += val;
-
-            }
-
-            if(total === -1) {
-
-                // If the number is programmatically too big, don't show at all!
-                urlNum.innerText = "Too many";
-
-            } else if(total.toString().length > 9) {
-
-                // If the number is too big, show it in a nicer format
-                urlNum.innerText = total.toExponential(3);
-
-            } else {
-
-                // toLocaleString() just makes sure we can get some sweet
-                // commas in the final text.
-
-                urlNum.innerText = total.toLocaleString('en-US');
-
-            }
-
+            setNumberOfURLs(result);
         });
 
     });
 });
 
-// Button to bring you to popup_change_range.html
-let goToChangeRange = document.getElementById("goToChangeRange");
-
-goToChangeRange.addEventListener("click", async () => {
-    window.location.href = "popup_change_range.html";
-});
+/* ---------- SET TO TODAY BUTTON ---------- */
 
 // QoL, sets the date range to just today
 let setToToday = document.getElementById("setToToday");
@@ -119,44 +70,82 @@ setToToday.addEventListener("click", async () => {
 
     // Don't need to worry about any Date iteration.
 
-    let urlNum = document.getElementById("urlNum");
-
     chrome.storage.sync.get(todaysDate, function (result) {
-
-        let total = 0;
-
-        // Loop, because chrome.storage is finicky and I
-        // don't want to fix what isn't broken.
-        for (let [key, val] of Object.entries(result)) {
-
-            if((total + val) > Number.MAX_VALUE) {
-                total = -1;
-                break;
-            }
-
-            total += val;
-
-        }
-
-        if(total === -1) {
-
-            // If the number is programmatically too big, don't show at all!
-            urlNum.innerText = "Too many";
-
-        } else if(total.toString().length > 9) {
-
-            // If the number is too big, show it in a nicer format
-            urlNum.innerText = total.toExponential(3);
-
-        } else {
-
-            // toLocaleString() just makes sure we can get some sweet
-            // commas in the final text.
-
-            urlNum.innerText = total.toLocaleString('en-US');
-
-        }
-
+        setNumberOfURLs(result);
     });
 
 });
+
+/* ---------- CHANGE RANGE BUTTON ---------- */
+
+// Button to bring you to popup_change_range.html
+let goToChangeRange = document.getElementById("goToChangeRange");
+
+goToChangeRange.addEventListener("click", async () => {
+    window.location.href = "popup_change_range.html";
+});
+
+/* ---------- UTILITY FUNCTIONS ---------- */
+
+/**
+ * Utility function to convert the parameter to
+ * a correct typed object that I can iterate through
+ *
+ * @param dateText yyyy-mm-dd String
+ * @returns {Date} That date, represented as a Date object
+ */
+function getDateObjFromString(dateText) {
+
+    let year = Number(dateText.split("-")[0]);
+    let month = Number(dateText.split("-")[1]) - 1;
+    let day = Number(dateText.split("-")[2]);
+
+    return new Date(year, month, day);
+
+}
+
+/**
+ * Given a result from Chrome Storage when queried for URL
+ * numbers about a certain day, update the URL counter on
+ * the page based on the information retrieved.
+ *
+ * @param result Query results from Chrome Storage
+ */
+function setNumberOfURLs(result) {
+
+    let urlNum = document.getElementById("urlNum");
+    let total = 0;
+
+    // Loop, because chrome.storage is finicky and I
+    // don't want to fix what isn't broken.
+    for (let [key, val] of Object.entries(result)) {
+
+        if ((total + val) > Number.MAX_VALUE) {
+            total = -1;
+            break;
+        }
+
+        total += val;
+
+    }
+
+    if(total === -1) {
+
+        // If the number is programmatically too big, don't show at all!
+        urlNum.innerText = "Too many";
+
+    } else if(total.toString().length > 9) {
+
+        // If the number is too big, show it in a nicer format
+        urlNum.innerText = total.toExponential(3);
+
+    } else {
+
+        // toLocaleString() just makes sure we can get some sweet
+        // commas in the final text.
+
+        urlNum.innerText = total.toLocaleString('en-US');
+
+    }
+
+}

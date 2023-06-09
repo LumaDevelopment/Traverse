@@ -1,3 +1,5 @@
+/* ---------- ON INSTALL LISTENER ---------- */
+
 // When the extension is first installed, we want to initialize
 // our range with two dates: so we'll just set it to today.
 chrome.runtime.onInstalled.addListener((reason) => {
@@ -10,6 +12,8 @@ chrome.runtime.onInstalled.addListener((reason) => {
     chrome.storage.sync.set({"endDate": todaysDate});
 
 });
+
+/* ---------- NAVIGATE TO NEW URL LISTENER ---------- */
 
 // Any time a tab is updated, it's time to add one to the counter
 chrome.tabs.onUpdated.addListener(() => {
